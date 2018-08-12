@@ -14,7 +14,7 @@ export default class Register extends Component{
     })
   }
   toLogin = ()=>{
-    this.store.history.replace('login')
+    this.props.history.replace('login')
   }
   register = ()=>{
     console.log(this.state)
@@ -37,8 +37,8 @@ export default class Register extends Component{
           <WhiteSpace/>
           <List.Item>
             用户类型：&nbsp;&nbsp;
-            <Radio cheked={type==='dashen'} onChange={()=>this.handleChange('type','dashen')}>大神</Radio>&nbsp;&nbsp;&nbsp;&nbsp;
-            <Radio cheked={type==='laoban'} onChange={()=>this.handleChange('type','laoban')}>老板</Radio>
+            <Radio checked={type==='dashen'} onChange={()=>this.handleChange('type','dashen')}>大神</Radio>&nbsp;&nbsp;&nbsp;&nbsp;
+            <Radio checked={type==='laoban'} onChange={()=>this.handleChange('type','laoban')}>老板</Radio>
           </List.Item>
           <WhiteSpace/>
           <Button type='primary' onClick={this.register}>注&nbsp;&nbsp;册</Button>
