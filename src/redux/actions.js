@@ -13,11 +13,11 @@ export  function register({username,password,rePassword,type}) {
   }
   return async dispatch => {
       const result= await reqRegister({username,password,type})
-      if(result.code===0){
+      if(result.data.code===0){
         //返回正确的信息
-        dispatch(authSuccess(result.data))
-      }else if(result.code===1){
-        dispatch(errorMsg(result.msg))
+        dispatch(authSuccess(result.data.data))
+      }else if(result.data.code===1){
+        dispatch(errorMsg(result.data.msg))
       }
   }
 }
@@ -28,12 +28,13 @@ export function login({username,password}) {
   }
   return async dispatch =>{
     const result = await reqLogin({username,password})
-    if(result.code===0){
+    console.log(result.data)
+    if(result.data.code===0){
       //返回正确的信息
-      dispatch(authSuccess(result.data))
-    }else if(result.code===1){
+      dispatch(authSuccess(result.data.data))
+    }else if(result.data.code===1){
       //返回失败的信息
-      dispatch(errorMsg(result.msg))
+      dispatch(errorMsg(result.data.msg))
     }
   }
 }
