@@ -1,7 +1,9 @@
 import React,{Component} from 'react'
+import {connect} from 'react-redux'
 import {WingBlank,WhiteSpace,NavBar,List,InputItem,Radio,Button} from 'antd-mobile'
 import Logo from '../../components/logo/logo'
-export default class Register extends Component{
+import {register} from "../../redux/actions";
+class Register extends Component{
   state = {
     username: '',
     password: '',
@@ -18,6 +20,7 @@ export default class Register extends Component{
   }
   register = ()=>{
     console.log(this.state)
+    this.props.register(this.state)
   }
   render(){
     const {type} = this.state;
@@ -49,3 +52,7 @@ export default class Register extends Component{
     );
   }
 }
+export default connect(
+  state => state.user,
+  {register}
+)(Register)

@@ -1,7 +1,10 @@
 import React,{Component} from 'react'
+import {connect} from 'react-redux'
 import {WingBlank,WhiteSpace,NavBar,List,InputItem,Button} from 'antd-mobile'
 import Logo from '../../components/logo/logo'
-export default class Login extends Component{
+import {login} from "../../redux/actions";
+
+class Login extends Component{
   state = {
     username: '',
     password: ''
@@ -15,7 +18,10 @@ export default class Login extends Component{
     this.props.history.replace('register')
   }
   login = ()=>{
-    console.log(this.state)
+    this.props.login(this.state)
+    /*reqLogin(this.state).then(response=>{
+      console.log(response.data)
+    })*/
   }
   render(){
     return (
@@ -38,3 +44,7 @@ export default class Login extends Component{
     );
   }
 }
+export default connect(
+  state => state.user,
+  {login}
+)(Login)
