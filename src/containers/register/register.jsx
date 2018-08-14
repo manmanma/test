@@ -1,5 +1,6 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
+import {Redirect} from 'react-router-dom'
 import {WingBlank,WhiteSpace,NavBar,List,InputItem,Radio,Button} from 'antd-mobile'
 import Logo from '../../components/logo/logo'
 import {register} from "../../redux/actions";
@@ -19,11 +20,14 @@ class Register extends Component{
     this.props.history.replace('login')
   }
   register = ()=>{
-    console.log(this.state)
     this.props.register(this.state)
   }
   render(){
     const {type} = this.state;
+    const {msg,redirectTo} = this.props.user;
+    if(redirectTo){
+      return <Redirect to={redirectTo}/>
+    }
     return (
       <div>
         <NavBar type='primary'>用户注册</NavBar>
@@ -32,6 +36,7 @@ class Register extends Component{
         <WhiteSpace/>
         <WingBlank>
         <List>
+          {msg ? <p style={{color:'red',textAlign:'center'}}>{msg}</p> : null}
           <InputItem type="text" placeholder='请输入用户名' onChange={(val)=>this.handleChange('username',val)}>用户名：</InputItem>
           <WhiteSpace/>
           <InputItem type="password" placeholder='请输入密码' onChange={(val)=>this.handleChange('password',val)}>密码：</InputItem>
@@ -53,6 +58,6 @@ class Register extends Component{
   }
 }
 export default connect(
-  state => state.user,
+  state => ({user:state.user}),
   {register}
 )(Register)

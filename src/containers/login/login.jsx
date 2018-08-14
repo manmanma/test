@@ -1,5 +1,6 @@
 import React,{Component} from 'react'
 import {connect} from 'react-redux'
+import {Redirect} from 'react-router-dom'
 import {WingBlank,WhiteSpace,NavBar,List,InputItem,Button} from 'antd-mobile'
 import Logo from '../../components/logo/logo'
 import {login} from "../../redux/actions";
@@ -24,6 +25,10 @@ class Login extends Component{
     })*/
   }
   render(){
+    const {msg,redirectTo} = this.props.user;
+    if(redirectTo){
+      return <Redirect to={redirectTo}/>
+    }
     return (
       <div>
         <NavBar type='primary'>用户登录</NavBar>
@@ -32,6 +37,7 @@ class Login extends Component{
         <WhiteSpace/>
         <WingBlank>
           <List>
+            {msg ? <p style={{color:'red',textAlign:'center'}}>{msg}</p> : null}
             <InputItem type="text" placeholder='请输入用户名' onChange={(val)=>this.handleChange('username',val)}>用户名：</InputItem>
             <WhiteSpace/>
             <InputItem type="password" placeholder='请输入密码' onChange={(val)=>this.handleChange('password',val)}>密码：</InputItem>
@@ -45,6 +51,6 @@ class Login extends Component{
   }
 }
 export default connect(
-  state => state.user,
+  state => ({user:state.user}),
   {login}
 )(Login)
