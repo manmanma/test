@@ -26,9 +26,7 @@ class Register extends Component{
     const {type} = this.state;
     const {msg,redirectTo} = this.props.user;
     if(redirectTo){
-      return (
-        <Redirect to={redirectTo}/>
-      )
+      return <Redirect to={redirectTo}/>
     }
     return (
       <div>
@@ -38,7 +36,7 @@ class Register extends Component{
         <WhiteSpace/>
         <WingBlank>
         <List>
-          <p style={{color:'red',textAlign:'center'}}>{msg}</p>
+           {msg ? <p style={{color:'red',textAlign:'center'}}>{msg}</p> : null}
           <InputItem type="text" placeholder='请输入用户名' onChange={(val)=>this.handleChange('username',val)}>用户名：</InputItem>
           <WhiteSpace/>
           <InputItem type="password" placeholder='请输入密码' onChange={(val)=>this.handleChange('password',val)}>密码：</InputItem>
@@ -60,6 +58,10 @@ class Register extends Component{
   }
 }
 export default connect(
+<<<<<<< HEAD
   state => ({user: state.user}),
+=======
+  state => ({user:state.user}),
+>>>>>>> dev
   {register}
 )(Register)
