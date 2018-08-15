@@ -9,7 +9,7 @@ export default function ajax(url= '',data= {},type= 'GET'){
     if(urlData!==''){
       //urlData = urlData.substring(0,urlData.lastIndexOf('&'))
       urlData = urlData.substring(0,urlData.length-1)
-      url+= url + '?' + urlData
+      url+= '?' + urlData
     }
     return axios.get(url)
   }else if(type==='POST'){

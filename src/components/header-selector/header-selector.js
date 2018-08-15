@@ -21,7 +21,7 @@ class HeaderSelector extends Component{
     // 设置当前头像图片对象
     this.setState({icon})
     // 设置头像名称
-    this.props.setHeader({text,icon})
+    this.props.setHeader(text)
   }
   render(){
     const {icon} = this.state

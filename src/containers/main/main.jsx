@@ -9,6 +9,7 @@ import Laoban from '../laoban/laoban';
 import Message from '../message/message';
 import UserCenter from '../user-center/user-center';
 import NavFooter from '../../components/nav-footer/nav-footer';
+import Chat from '../../containers/chat/chat';
 import NotFound from '../../components/not-found/not-found'
 import {getUser} from "../../redux/actions";
 import Cookies from 'js-cookie'
@@ -64,6 +65,7 @@ class Main extends Component {
     if(!user._id){
       return <div>LOADING...</div>
     }
+
     // 得到当前请求的path
     const path = this.props.location.pathname
     //3). 判断请求的路径是否是/
@@ -71,12 +73,25 @@ class Main extends Component {
       // 根据当前用户的相关信息, 自动跳转对应的界面
       return <Redirect to={getRedirectPath(user.type,user.header)}/>
     }
+    //是否隐藏大神/老板列表
+    if(user.type==='dashen'){//用户类型是大神，大神列表隐藏，显示老板列表
+      this.navList[0].hide=true
+      if(path==='/laoban'){//用户类型是大神，输入/laoban，应该跳转到dashen
+        return <Redirect to='/dashen'/>
+      }
+    }else{
+      if(path==='/dashen'){
+        return <Redirect to='/laoban'/>
+      }
+      this.navList[1].hide=true
+    }
+
     // 4.得到当前导航的信息对象
     // find()返回的是第一次回调函数返回true的对应的元素, 如果没有一匹配的, 返回undefined
     const currentNav = this.navList.find((nav, index) => nav.path===path)
     return (
       <div>
-        {currentNav ? <NavBar>{currentNav.title}</NavBar> : ''}
+        {currentNav ? <NavBar className='fix-top' >{currentNav.title}</NavBar> : ''}
         <Switch>
           <Route path="/dasheninfo" component={DashenInfo} />
           <Route path='/laobaninfo' component={LaobanInfo} />
@@ -85,9 +100,10 @@ class Main extends Component {
           <Route path='/dashen' component={Dashen} />
           <Route path='/message' component={Message} />
           <Route path='/usercenter' component={UserCenter} />
+          <Route path='/chat/:userid' component={Chat}/>
           <Route component={NotFound}/>
         </Switch>
-        {currentNav ? <NavFooter/> : ''}
+        {currentNav ? <NavFooter navList={this.navList}/> : ''}
       </div>
     );
   }
