@@ -58,10 +58,6 @@ class Register extends Component{
   }
 }
 export default connect(
-<<<<<<< HEAD
-  state => ({user: state.user}),
-=======
   state => ({user:state.user}),
->>>>>>> dev
   {register}
 )(Register)
