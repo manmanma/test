@@ -23,10 +23,11 @@ class UserCenter extends Component {
   }
   render () {
     const {username,post,info,header,salary, company} = this.props.user
+    const headerImg =  header ? header : '头像1'
     return (
       <div style={{marginBottom:50,marginTop:50}}>
         <Result
-          img={<img src={require(`../../assets/images/${header}.png`)} style={{width: 50}} alt="header"/>}
+          img={<img src={require(`../../assets/images/${headerImg}.png`)} style={{width: 50}} alt="header"/>}
           title={username}
           message={company}
         />

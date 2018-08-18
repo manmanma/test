@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import PropTypes from 'prop-types'
 import {Card, WingBlank, WhiteSpace} from 'antd-mobile'
 import {withRouter} from 'react-router-dom'
-
+import QueueAnim from 'rc-queue-anim'
 const Header = Card.Header
 const Body = Card.Body
 
@@ -13,13 +13,14 @@ class UserList extends Component{
   render(){
     const {userList} = this.props
     return (
-      <WingBlank style={{marginBottom:50,marginTop:50}}>
+      <WingBlank className='margin'>
+        <QueueAnim type='left'>
         {userList.map((user,index)=>
-          <div key={index} onClick={()=>this.props.history.push(`/chat/${user._id}`)}>
+          <div key={index}>
             <WhiteSpace/>
-            <Card>
+            <Card  onClick={()=>this.props.history.push(`/chat/${user._id}`)}>
               <Header
-                thumb={require(`../../assets/images/${user.header}.png`)}
+                thumb={require(`../../assets/images/${user.header?user.header:'头像1'}.png`)}
                 extra={user.username}
               />
               <Body>
@@ -31,7 +32,7 @@ class UserList extends Component{
             </Card>
           </div>
         )}
-
+        </QueueAnim>
       </WingBlank>
     )
   }
